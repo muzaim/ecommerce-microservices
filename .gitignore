@@ -1,0 +1,20 @@
+# Binary & Build Output
+bin/
+tmp/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Environment Variables & Secrets
+.env
+*.env
+
+# IDE & OS Files
+.DS_Store
+.idea/
+.vscode/
+
+# Log files
+*.log

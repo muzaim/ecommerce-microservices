@@ -1,4 +1,4 @@
-DB_URL=postgres://postgres:postgrespassword@localhost:5432/ecommerce_product?sslmode=disable
+DB_URL=postgres://postgres:postgrespassword@127.0.0.1:5432/ecommerce_product?sslmode=disable
 
 .PHONY: dev build run migrate-up migrate-down
 

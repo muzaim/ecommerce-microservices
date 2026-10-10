@@ -1,0 +1,18 @@
+DB_URL=postgres://postgres:postgrespassword@127.0.0.1:5432/ecommerce_order?sslmode=disable
+
+.PHONY: dev build run migrate-up migrate-down
+
+dev:
+	air
+
+build:
+	go build -o bin/api cmd/api/main.go
+
+run: build
+	./bin/api
+
+migrate-up:
+	migrate -path migrations -database "$(DB_URL)" -verbose up
+
+migrate-down:
+	migrate -path migrations -database "$(DB_URL)" -verbose down 1

@@ -23,6 +23,7 @@ type LoginRequest struct {
 }
 
 type AuthResponse struct {
-	Token string `json:"token"`
-	User  User   `json:"user"`
+	SessionID string `json:"session_id"`
+	Token     string `json:"token"`
+	User      User   `json:"user"`
 }

@@ -6,7 +6,6 @@ import (
 
 	"ecommerce/services/auth/internal/config"
 	"ecommerce/services/auth/internal/handler"
-	"ecommerce/services/auth/internal/middleware"
 	"ecommerce/services/auth/internal/repository"
 	"ecommerce/services/auth/internal/service"
 
@@ -20,10 +19,10 @@ func main() {
 	}
 
 	db := config.ConnectDB()
+	rdb := config.ConnectRedis()
 
-	// Dependency Injection: DB -> Repo -> Service -> Handler
 	userRepo := repository.NewUserRepository(db)
-	authService := service.NewAuthService(userRepo)
+	authService := service.NewAuthService(userRepo, rdb)
 	authHandler := handler.NewAuthHandler(authService)
 
 	r := gin.Default()
@@ -35,18 +34,12 @@ func main() {
 		})
 	})
 
-	// Routes Auth
+	// Routes Auth Public
 	authRoutes := r.Group("/auth")
 	{
 		authRoutes.POST("/register", authHandler.Register)
 		authRoutes.POST("/login", authHandler.Login)
-	}
-
-	// Routes Auth Protected (Butuh JWT Token)
-	protected := r.Group("/auth")
-	protected.Use(middleware.JWTAuthMiddleware())
-	{
-		protected.GET("/me", authHandler.GetProfile)
+		authRoutes.GET("/me", authHandler.GetProfile)
 	}
 
 	log.Println("Auth service running on port :8081")

@@ -1,6 +1,7 @@
 # Binary & Build Output
 bin/
 tmp/
+main
 *.exe
 *.exe~
 *.dll
